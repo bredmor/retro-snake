@@ -24,27 +24,30 @@ $(document).ready(function(){
   }
 
   // Initialize Colors
-  COLOR_BLOCK = "#333333";
-  COLOR_BG = "#3C6C44";
-  COLOR_BORDER = "#000000";
-  COLOR_SCORE = "#FFFFFF";
-  COLOR_PAUSED = "#FFFFFF";
-  COLOR_HIGHSCORE = "#FFFFFF";
-  COLOR_NEWHIGHSCORE = "#CC0000";
-  COLOR_GAMEOVER = "#000000";
-	COLOR_TITLE = "#FFFFFF";
-	COLOR_SUBTITLE = "#FFFFFF";
+	var color = {
+		block: "#333333",
+		bg: "#3C6C44",
+		border: "#000000",
+		score: "#FFFFFF",
+		paused: "#FFFFFF",
+		highScore: "#FFFFFF",
+		newHighScore: "#CC0000",
+		gameOver: "#000000",
+		title: "#FFFFFF",
+		subtitle: "#FFFFFF"
+	}
 
   // Initialize Fonts
-  FONT_SCORE = '15px PressStart2P';
-  FONT_PAUSED = '40px PressStart2P';
-  FONT_HIGHSCORE = "15px PressStart2P";
-  FONT_NEWHIGHSCORE = "15px PressStart2P";
-  FONT_GAMEOVER = "40px PressStart2P";
-	FONT_TITLE = "40px PressStart2P";
-	FONT_SUBTITLE = "15px PressStart2P";
-	FONT_SUBSUBTITLE ="10px PressStart2P";
-
+	var font = {
+	  score: "15px PressStart2P",
+	  paused: "40px PressStart2P",
+	  highScore: "15px PressStart2P",
+	  newHighScore: "15px PressStart2P",
+	  gameOver: "40px PressStart2P",
+		title: "40px PressStart2P",
+		subtitle: "15px PressStart2P",
+		subsubtitle: "10px PressStart2P",
+	}
   // Initialize Sound Effects
 	// // Made with http://www.bfxr.net/ unless specified
   var sfxFood = new Audio("res/food.wav");
@@ -212,10 +215,10 @@ $(document).ready(function(){
   // Draw a block (since everything but the score is made with blocks, we can
   // use this function for anything - snake segments, food, new things)
 	function drawBlock(x, y) {
-		CONTEXT.fillStyle = COLOR_BLOCK;
+		CONTEXT.fillStyle = color.block;
 		CONTEXT.fillRect(x*BLOCK_SIZE, y*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 
-		CONTEXT.strokeStyle = COLOR_BG;
+		CONTEXT.strokeStyle = color.bg;
 		CONTEXT.strokeRect(x*BLOCK_SIZE, y*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 	}
 
@@ -305,14 +308,14 @@ $(document).ready(function(){
   }
 
 	function titleScreen() {
-		CONTEXT.fillStyle = COLOR_BG;
+		CONTEXT.fillStyle = color.bg;
 		CONTEXT.fillRect(0, 0, WIDTH, HEIGHT);
-		CONTEXT.strokeStyle = COLOR_BORDER;
+		CONTEXT.strokeStyle = color.border;
 		CONTEXT.strokeRect(0, 0, WIDTH, HEIGHT);
 
-		drawText("Snake!", FONT_TITLE, COLOR_TITLE, 0, 0, true, true);
-		drawText("It's not on a plane!", FONT_SUBTITLE, COLOR_SUBTITLE, 0, 20, true);
-		drawText("Press Any Key To Start", FONT_SUBSUBTITLE, COLOR_SUBTITLE, 0, 50, true);
+		drawText("Snake!", font.title, color.title, 0, 0, true, true);
+		drawText("It's not on a plane!", font.subtitle, color.subtitle, 0, 20, true);
+		drawText("Press Any Key To Start", font.subsubtitle, color.subtitle, 0, 50, true);
 	}
 
   function gameOver() {
@@ -326,10 +329,10 @@ $(document).ready(function(){
       GAMEOVER_MUSIC = true;
     }
 
-    drawText("Game Over", FONT_GAMEOVER, COLOR_GAMEOVER, 0, 0, true);
-    drawText("High Score: " + localStorage.highScore, FONT_HIGHSCORE, COLOR_HIGHSCORE, 0, 20, true);
+    drawText("Game Over", font.gameOver, color.gameOver, 0, 0, true);
+    drawText("High Score: " + localStorage.highScore, font.highScore, color.highScore, 0, 20, true);
     if(NEW_HIGHSCORE == true) {
-      drawText("New High Score!", FONT_NEWHIGHSCORE, COLOR_NEWHIGHSCORE, 0, 40, true);
+      drawText("New High Score!", font.newHighScore, color.newHighScore, 0, 40, true);
     }
   }
 
@@ -345,9 +348,9 @@ $(document).ready(function(){
 	// Draw the frame
 	function draw() {
     // Draw/Refresh the base canvas
-		CONTEXT.fillStyle = COLOR_BG;
+		CONTEXT.fillStyle = color.bg;
 		CONTEXT.fillRect(0, 0, WIDTH, HEIGHT);
-		CONTEXT.strokeStyle = COLOR_BORDER;
+		CONTEXT.strokeStyle = color.border;
 		CONTEXT.strokeRect(0, 0, WIDTH, HEIGHT);
 
     theSnake.draw();
@@ -360,7 +363,7 @@ $(document).ready(function(){
           mainLoop();
           break;
         case "pause":
-          drawText("Paused", FONT_PAUSED, COLOR_PAUSED, 0, 0, true);
+          drawText("Paused", font.paused, color.paused, 0, 0, true);
           break;
         case "gameover":
           gameOver();
@@ -372,7 +375,7 @@ $(document).ready(function(){
     }
 
 		var scoreText = "Score: " + SCORE;
-    drawText(scoreText, FONT_SCORE, COLOR_SCORE, 5, 20);
+    drawText(scoreText, font.score, color.score, 5, 20);
 
     requestAnimationFrame(draw);
 	}
