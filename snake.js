@@ -35,19 +35,21 @@ $(document).ready(function() {
     newHighScore: "#CC0000",
     gameOver: "#000000",
     title: "#FFFFFF",
-    subtitle: "#FFFFFF"
+    subtitle: "#FFFFFF",
+    loading: "#FFFFFF"
   }
 
   // Initialize Fonts
   var font = {
-    score: "15px PressStart2P",
-    paused: "40px PressStart2P",
-    highScore: "15px PressStart2P",
-    newHighScore: "15px PressStart2P",
-    gameOver: "40px PressStart2P",
-    title: "40px PressStart2P",
-    subtitle: "15px PressStart2P",
-    subsubtitle: "10px PressStart2P",
+    score: "15px 'Press Start 2P'",
+    paused: "40px 'Press Start 2P'",
+    highScore: "15px 'Press Start 2P'",
+    newHighScore: "15px 'Press Start 2P'",
+    gameOver: "40px 'Press Start 2P'",
+    title: "40px 'Press Start 2P'",
+    subtitle: "15px 'Press Start 2P'",
+    subsubtitle: "10px 'Press Start 2P'",
+    loading: "25px"
   }
     // Initialize Sound Effects
     // // Made with http://www.bfxr.net/ unless specified
@@ -342,17 +344,25 @@ $(document).ready(function() {
     }
   }
 
+  // Display title
   function titleScreen() {
     CONTEXT.fillStyle = color.bg;
     CONTEXT.fillRect(0, 0, WIDTH, HEIGHT);
     CONTEXT.strokeStyle = color.border;
     CONTEXT.strokeRect(0, 0, WIDTH, HEIGHT);
 
+    if(FONTS_LOADED == false) {
+      drawText("Loading Resources...", font.loading, color.loading, 0, 0, true, true);
+      requestAnimationFrame(titleScreen);
+      return;
+    }
+
     drawText("Snake!", font.title, color.title, 0, 0, true, true);
     drawText("It's not on a plane!", font.subtitle, color.subtitle, 0, 20, true);
     drawText("Press Any Key To Start", font.subsubtitle, color.subtitle, 0, 50, true);
   }
 
+  // Display game over and handle highscore data
   function gameOver() {
     if (localStorage.highScore < SCORE) {
       localStorage.highScore = SCORE;
