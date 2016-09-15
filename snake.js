@@ -14,6 +14,7 @@ $(document).ready(function(){
   var TICK_RATE_DECLINE = 3; // How much faster the game gets when we "eat"
   var TICK_LAST_TIMESTAMP;
   var DIRECTION = "right"; // Initial direction for the snake
+	var DIRECTION_INTENT = "right";
   var GAME_STATE = "title";
   var NEW_HIGHSCORE = false; // Whether or not we've had a new highscore this play
   var GAMEOVER_MUSIC = false; // Whether or not we've played the gameover music this play
@@ -66,16 +67,14 @@ $(document).ready(function(){
 
 		var key = e.which;
 
-    // Inelegant solution, but probably the least complicated way of adding
-    // the controls while avoiding the snake looping back on itself
-    if(key == "39" && DIRECTION != "left") {
-      DIRECTION = "right";
-    } else if(key == "37" && DIRECTION != "right") {
-      DIRECTION = "left";
-    } else if(key == "38" && DIRECTION != "down") {
-      DIRECTION = "up";
-    } else if(key == "40" && DIRECTION != "up") {
-      DIRECTION = "down";
+    if(key == "39") {
+      directionSwitch('right');
+    } else if(key == "37") {
+      directionSwitch('left');
+    } else if(key == "38") {
+      directionSwitch('up')
+    } else if(key == "40") {
+      directionSwitch('down')
     } else if(key == "32" && (GAME_STATE == "play" || GAME_STATE == "pause")) {
       pause();
     } else if(key == "70") {
@@ -131,17 +130,21 @@ $(document).ready(function(){
   		this.head.x = this.array[0].x;
   		this.head.y = this.array[0].y;
 
-      switch(DIRECTION) {
+      switch(DIRECTION_INTENT) {
         case "right":
+					DIRECTION = "right";
           this.head.x++;
           break;
         case "left":
+					DIRECTION = "left";
           this.head.x--;
           break;
         case "up":
+					DIRECTION = "up";
           this.head.y--;
           break;
         case "down":
+					DIRECTION = "down";
           this.head.y++;
           break;
       }
@@ -292,6 +295,31 @@ $(document).ready(function(){
 
     TICK_LAST_TIMESTAMP = Date.now();
   }
+
+	function directionSwitch(direction) {
+		switch(direction) {
+			case 'up':
+				if(DIRECTION != 'down') {
+					DIRECTION_INTENT = 'up';
+				}
+				break;
+			case 'down':
+				if(DIRECTION != 'up') {
+				 DIRECTION_INTENT = 'down';
+			 }
+				break;
+			case 'left':
+				if(DIRECTION != 'right') {
+					DIRECTION_INTENT = 'left';
+				}
+				break;
+			case 'right':
+				if(DIRECTION != 'left') {
+					DIRECTION_INTENT = 'right';
+				}
+				break;
+		}
+	}
 
   // Switch game states between play and pause
   function pause() {
