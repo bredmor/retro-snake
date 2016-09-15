@@ -273,6 +273,7 @@ $(document).ready(function(){
     TICK_RATE = 120;
     TICK_LAST_TIMESTAMP = Date.now();
 		DIRECTION = "right";
+		DIRECTION_INTENT = "right";
 		theSnake.spawn();
 		snakeFood.spawn();
 		SCORE = 0;
